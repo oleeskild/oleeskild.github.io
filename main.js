@@ -1,9 +1,11 @@
 var square = null;
 
 function move() {
+    window.requestAnimationFrame(move);
     if(square === null){
         return;
     }
+    
     var c = document.getElementById("square");
     var ctx = c.getContext("2d");
     ctx.clearRect(0,0,400,400);
@@ -11,12 +13,20 @@ function move() {
     
     
     if(square.x >= (400-square.w)){
-        square.dir = -1;
+        square.dirX = -1;
     }
-    if(square.x <= (square.w)){
-        square.dir = 1;
+    if(square.x <= (0)){
+        square.dirX = 1;
     }
-    square.x += 4*square.dir;
+    if(square.y >= (400-square.h)){
+        square.dirY = -1;
+    }
+    if(square.y <= (0)){
+        square.dirY = 1;
+    }
+    square.x += (Math.random()+4)*square.dirX;
+    square.y += (Math.random()+2)*square.dirY; 
+    
     
 }
 
@@ -34,12 +44,18 @@ function makeSquare(){
         y: 0,
         h: 20,
         w: 20,
-        dir: 1
+        dirX: 1,
+        dirY: 1
     };
 }
 
 
 
-//window.requestAnimationFrame(move);
-setInterval(move,1000/60);
-document.getElementById("square").addEventListener("click", makeSquare);
+
+//setInterval(move,1000/60);
+
+(function(){
+    document.getElementById("square").addEventListener("click", makeSquare);
+    window.requestAnimationFrame(move);
+
+})();
