@@ -9,8 +9,15 @@ function move() {
     ctx.clearRect(0,0,400,400);
     draw();
     
-    square.x+=2;
-    square.y+=2;   
+    
+    if(square.x >= (400-square.w)){
+        square.dir = -1;
+    }
+    if(square.x <= (square.w)){
+        square.dir = 1;
+    }
+    square.x += 4*square.dir;
+    
 }
 
 function draw(){
@@ -26,7 +33,8 @@ function makeSquare(){
         x: 0,
         y: 0,
         h: 20,
-        w: 20
+        w: 20,
+        dir: 1
     };
 }
 
